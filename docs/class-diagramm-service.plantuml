@@ -1,0 +1,57 @@
+@startuml
+
+component Service {
+
+	package service {
+
+		class ComponentDataCollector {
+		}
+
+		interface DependencyReaderPort {
+		}
+
+		interface LinkReaderPort {
+		}
+
+		interface PersistencePort {
+		}
+
+		ComponentDataCollector "1" --> "*" LinkReaderPort
+		ComponentDataCollector "1" --> "*" DependencyReaderPort
+		ComponentDataCollector "1" --> "1" PersistencePort
+
+	}
+	
+	package dependency {
+
+		class PomXMLDependencyReaderAdapter {
+		}
+
+		PomXMLDependencyReaderAdapter .UP.|> DependencyReaderPort
+
+	}
+
+	package persistence {
+
+		class PersistenceAdapter
+
+		PersistenceAdapter .UP.|> PersistencePort
+
+	}
+
+	package reader {
+
+		class ApplicationPropertiesLinkReaderAdapter {
+		}
+
+		class ApplicationYAMLLinkReaderAdapter {
+		}
+
+		ApplicationPropertiesLinkReaderAdapter .UP.|> LinkReaderPort
+		ApplicationYAMLLinkReaderAdapter .UP.|> LinkReaderPort
+
+	}
+
+}
+
+@enduml

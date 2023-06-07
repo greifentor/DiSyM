@@ -6,6 +6,7 @@ A tool for distributed system mapping.
 ## Vision
 
 * Reads information about distributed systems from different sources, like e. g. "application.properties", "application.yml" or other sources.
+* Will work with Spring Boot applications only for the first time.
 * It should be easy to logic to process new sources.
 * The information will be stored in a relational database but it should be also possible to add other storages.
 * There should be a tool, which is able to show the system relations in a graphical way (maybe by an output as PlantUML file).

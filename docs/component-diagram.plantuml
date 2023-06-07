@@ -1,0 +1,62 @@
+@startuml
+
+component DBMS {
+
+	database DiSyMDB as "DiSyM-DB"
+
+}
+
+component DiSyM {
+
+	component CLI {
+
+		component CLICommandProcessor
+
+	}
+
+	component Service {
+	
+		component ApplicationPropertiesReader
+
+		component ApplicationYAMLReader
+
+		component ComponentDataCollector
+
+		component PersistenceAdapter
+ 
+		component PomXMLReader
+
+ 		ComponentDataCollector --> ApplicationPropertiesReader
+		ComponentDataCollector --> ApplicationYAMLReader
+		ComponentDataCollector --> PersistenceAdapter
+		ComponentDataCollector --> PomXMLReader
+
+		PersistenceAdapter --> DiSyMDB
+
+	}
+
+}
+
+component "Distributed System 1" as DistributedSystem1 {
+
+	file ApplicationYAML as "application.yml"
+	file PomXML1 as "pom.xml"
+
+}
+
+component "Distributed System 2" as DistributedSystem2 {
+
+	file ApplicationProperties as "application.properties"
+ 	file PomXML2 as "pom.xml"
+
+}
+
+CLICommandProcessor --> ComponentDataCollector
+
+ApplicationPropertiesReader --> ApplicationProperties
+ApplicationYAMLReader --> ApplicationYAML
+
+PomXMLReader --> PomXML1
+PomXMLReader --> PomXML2
+
+@enduml

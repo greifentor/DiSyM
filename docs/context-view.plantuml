@@ -1,0 +1,17 @@
+@startuml
+
+node DiSyM
+
+node "Distributed System 1" as DistributedSystem1 
+node "Distributed System n" as DistributedSystemN
+
+actor Admin
+actor Developer
+
+Admin --> DiSyM
+Developer --> DiSyM
+
+DiSyM ..> DistributedSystem1
+DiSyM ..> DistributedSystemN
+
+@enduml
