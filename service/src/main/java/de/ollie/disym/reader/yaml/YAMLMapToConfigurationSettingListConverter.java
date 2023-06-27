@@ -15,7 +15,8 @@ public class YAMLMapToConfigurationSettingListConverter {
 	public List<ConfigurationSetting> convert(Map<String, Object> map) {
 		List<ConfigurationSetting> l = new ArrayList<>();
 		fillList(map, "", l);
-		return l.stream()
+		return l
+				.stream()
 				.sorted((cs0, cs1) -> cs0.getIdentifier().compareTo(cs1.getIdentifier()))
 				.collect(Collectors.toList());
 	}
@@ -24,11 +25,11 @@ public class YAMLMapToConfigurationSettingListConverter {
 	private void fillList(Map<String, Object> map, String identifier, List<ConfigurationSetting> l) {
 		for (String id : map.keySet()) {
 			String idNew = identifier + (!identifier.isEmpty() ? "." : "") + id;
-			Object o  = map.get(id);
+			Object o = map.get(id);
 			if (o instanceof Map) {
 				fillList((Map<String, Object>) o, idNew, l);
 			} else {
-				l.add(new ConfigurationSetting(idNew, "" + o));
+				l.add(ConfigurationSetting.of(idNew, "" + o));
 			}
 		}
 	}

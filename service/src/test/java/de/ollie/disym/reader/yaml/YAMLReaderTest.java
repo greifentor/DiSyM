@@ -50,17 +50,22 @@ class YAMLReaderTest {
 		void returnsACorrectMap_passingANameOfAValidYAMLFile(@TempDir Path tempDir) throws Exception {
 			// Prepare
 			Path path = tempDir.resolve("test.yml");
-			List<String> content = Arrays.asList("url:",
-					"  subsystem1: url1",
-					"  subsystem2: url2",
-					"something:",
-					"  completely:",
-					"    different: Monty Python");
+			List<String> content =
+					Arrays
+							.asList(
+									"url:",
+									"  subsystem1: url1",
+									"  subsystem2: url2",
+									"something:",
+									"  completely:",
+									"    different: Monty Python");
 			Files.write(path, content);
-			List<ConfigurationSetting> expected = List.of(
-					new ConfigurationSetting("something.completely.different", "Monty Python"),
-					new ConfigurationSetting("url.subsystem1", "url1"),
-					new ConfigurationSetting("url.subsystem2", "url2"));
+			List<ConfigurationSetting> expected =
+					List
+							.of(
+									ConfigurationSetting.of("something.completely.different", "Monty Python"),
+									ConfigurationSetting.of("url.subsystem1", "url1"),
+									ConfigurationSetting.of("url.subsystem2", "url2"));
 			// Run
 			List<ConfigurationSetting> returned = unitUnderTest.readYAMLFile(path.toString());
 			// Check

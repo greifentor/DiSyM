@@ -1,5 +1,7 @@
 package de.ollie.disym.service.model.rule;
 
+import java.util.Stack;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -14,10 +16,16 @@ import lombok.ToString;
 @ToString
 public class Value implements Word {
 
-	private Object value;
-
 	public static Value of(Object value) {
 		return new Value(value);
+	}
+
+	private Object value;
+
+	@Override
+	public Stack<Object> evaluate(Stack<Object> stack) {
+		stack.push(getValue());
+		return stack;
 	}
 
 }
