@@ -16,8 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import de.ollie.disym.reader.ReaderException;
 import de.ollie.disym.service.model.ConfigurationSetting;
+import de.ollie.disym.service.model.ReaderException;
 
 @ExtendWith(MockitoExtension.class)
 class YAMLReaderTest {

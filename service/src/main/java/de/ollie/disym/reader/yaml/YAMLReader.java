@@ -12,8 +12,8 @@ import javax.inject.Named;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import de.ollie.disym.reader.ReaderException;
 import de.ollie.disym.service.model.ConfigurationSetting;
+import de.ollie.disym.service.model.ReaderException;
 import de.ollie.disym.service.port.ConfigurationSettingYAMLReaderPort;
 
 @Named

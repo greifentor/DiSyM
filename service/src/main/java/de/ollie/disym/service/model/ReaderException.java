@@ -1,4 +1,4 @@
-package de.ollie.disym.reader;
+package de.ollie.disym.service.model;
 
 public class ReaderException extends RuntimeException {
 
