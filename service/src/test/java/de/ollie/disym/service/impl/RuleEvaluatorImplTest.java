@@ -40,7 +40,7 @@ class RuleEvaluatorImplTest {
 		@Test
 		void returnsAnEmptyStack_passingAnEmptyRule() {
 			assertTrue(
-					unitUnderTest.evaluate(new Rule("id", List.of()), ConfigurationSetting.of("id", ";op")).isEmpty());
+					unitUnderTest.evaluate(Rule.of(List.of()), ConfigurationSetting.of("id", ";op")).isEmpty());
 		}
 
 		@Nested
@@ -55,8 +55,7 @@ class RuleEvaluatorImplTest {
 				Stack<Object> returned =
 						unitUnderTest
 								.evaluate(
-										new Rule(
-												"id",
+										Rule.of(
 												List.of(Value.of(Boolean.TRUE), Value.of(Boolean.FALSE), new Or())),
 										ConfigurationSetting.of("id", ";op"));
 				// Check
@@ -76,7 +75,7 @@ class RuleEvaluatorImplTest {
 				// Run
 				Stack<Object> returned =
 						unitUnderTest
-								.evaluate(new Rule("id", List.of(Value.of(VALUE))), ConfigurationSetting.of(ID, ";op"));
+								.evaluate(Rule.of(List.of(Value.of(VALUE))), ConfigurationSetting.of(ID, ";op"));
 				// Check
 				assertEquals(expected, returned);
 			}

@@ -2,6 +2,7 @@ package de.ollie.disym.service.model.command;
 
 import static de.ollie.disym.util.Check.ensure;
 
+import java.util.Map;
 import java.util.Stack;
 
 import de.ollie.disym.service.model.rule.Command;
@@ -15,7 +16,7 @@ public class And extends Command {
 	}
 
 	@Override
-	public Stack<Object> evaluate(Stack<Object> stack) {
+	public Stack<Object> evaluate(Stack<Object> stack, Map<String, Object> valueStore) {
 		ensure(!stack.isEmpty(), new MissingArgumentRuleEvaluationException(1, this));
 		ensure(stack.peek() instanceof Boolean,
 				new WrongArgumentTypeRuleEvaluationException(1, this, Boolean.class, stack.peek().getClass()));

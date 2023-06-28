@@ -5,6 +5,7 @@ import static de.ollie.disym.service.model.rule.WrongArgumentTypeRuleEvaluationE
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Map;
 import java.util.Stack;
 
 import org.junit.jupiter.api.Nested;
@@ -29,7 +30,7 @@ public class AndTest {
 		@Test
 		void throwsAnException_callingANDOnly() {
 			RuleEvaluationException thrown =
-					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(new Stack<>()));
+					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(new Stack<>(), Map.of()));
 			assertEquals(MESSAGE_MISSING_ARGUMENT.replace("{0}", "1").replace("{1}", "AND"), thrown.getMessage());
 		}
 
@@ -40,7 +41,7 @@ public class AndTest {
 			stack.push(Boolean.TRUE);
 			// Run & Check
 			RuleEvaluationException thrown =
-					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack));
+					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack, Map.of()));
 			assertEquals(MESSAGE_MISSING_ARGUMENT.replace("{0}", "0").replace("{1}", "AND"), thrown.getMessage());
 		}
 
@@ -51,7 +52,7 @@ public class AndTest {
 			stack.push(";op");
 			// Run & Check
 			RuleEvaluationException thrown =
-					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack));
+					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack, Map.of()));
 			assertEquals(
 					MESSAGE_WRONG_ARGUMENT_TYPE
 							.replace("{0}", "1")
@@ -71,7 +72,7 @@ public class AndTest {
 			stack.push(value0);
 			stack.push(value1);
 			// Run
-			Stack<Object> returned = unitUnderTest.evaluate(stack);
+			Stack<Object> returned = unitUnderTest.evaluate(stack, Map.of());
 			// Check
 			assertEquals(expected, returned);
 		}

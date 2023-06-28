@@ -4,6 +4,7 @@ import static de.ollie.disym.service.model.rule.MissingArgumentRuleEvaluationExc
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Map;
 import java.util.Stack;
 
 import org.junit.jupiter.api.Nested;
@@ -29,7 +30,7 @@ public class ContainsTest {
 			Stack<Object> stack = new Stack<>();
 			// Run & Check
 			RuleEvaluationException thrown =
-					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack));
+					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack, Map.of()));
 			assertEquals(MESSAGE_MISSING_ARGUMENT.replace("{0}", "1").replace("{1}", "CONTAINS"), thrown.getMessage());
 		}
 
@@ -40,7 +41,7 @@ public class ContainsTest {
 			stack.push(";op");
 			// Run & Check
 			RuleEvaluationException thrown =
-					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack));
+					assertThrows(RuleEvaluationException.class, () -> unitUnderTest.evaluate(stack, Map.of()));
 			assertEquals(MESSAGE_MISSING_ARGUMENT.replace("{0}", "0").replace("{1}", "CONTAINS"), thrown.getMessage());
 		}
 
@@ -53,7 +54,7 @@ public class ContainsTest {
 			Stack<Object> expected = new Stack<Object>();
 			expected.push(Boolean.TRUE);
 			// Run
-			Stack<Object> returned = unitUnderTest.evaluate(stack);
+			Stack<Object> returned = unitUnderTest.evaluate(stack, Map.of());
 			// Check
 			assertEquals(expected, returned);
 		}
@@ -67,7 +68,7 @@ public class ContainsTest {
 			Stack<Object> expected = new Stack<Object>();
 			expected.push(Boolean.FALSE);
 			// Run
-			Stack<Object> returned = unitUnderTest.evaluate(stack);
+			Stack<Object> returned = unitUnderTest.evaluate(stack, Map.of());
 			// Check
 			assertEquals(expected, returned);
 		}

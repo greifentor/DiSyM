@@ -1,5 +1,6 @@
 package de.ollie.disym.service.model.rule;
 
+import java.util.Map;
 import java.util.Stack;
 
 import lombok.AccessLevel;
@@ -23,7 +24,7 @@ public class Value implements Word {
 	private Object value;
 
 	@Override
-	public Stack<Object> evaluate(Stack<Object> stack) {
+	public Stack<Object> evaluate(Stack<Object> stack, Map<String, Object> valueStore) {
 		stack.push(getValue());
 		return stack;
 	}
