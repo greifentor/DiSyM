@@ -21,6 +21,7 @@ public class RuleEvaluatorImpl implements RuleEvaluator {
 		ensure(rule != null, "rule cannot be null!");
 		Stack<Object> stack = new Stack<>();
 		Map<String, Object> valueStore = new HashMap<>();
+		valueStore.put("setting.to.evaluate", settingToEvaluate);
 		rule.getWords().forEach(word -> word.evaluate(stack, valueStore));
 		return stack;
 	}

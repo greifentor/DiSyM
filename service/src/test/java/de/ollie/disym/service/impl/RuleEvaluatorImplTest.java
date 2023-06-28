@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import de.ollie.disym.service.model.ConfigurationSetting;
+import de.ollie.disym.service.model.command.Load;
 import de.ollie.disym.service.model.command.Or;
 import de.ollie.disym.service.model.rule.Rule;
 import de.ollie.disym.service.model.rule.Value;
@@ -41,6 +42,18 @@ class RuleEvaluatorImplTest {
 		void returnsAnEmptyStack_passingAnEmptyRule() {
 			assertTrue(
 					unitUnderTest.evaluate(Rule.of(List.of()), ConfigurationSetting.of("id", ";op")).isEmpty());
+		}
+
+		@Test
+		void putsTheConfigurationSettingToValueStore() {
+			// Prepare
+			ConfigurationSetting cs = ConfigurationSetting.of("id", ";op");
+			Stack<Object> expected = new Stack<>();
+			expected.push(cs);
+			// Run
+			Stack<Object> returned = unitUnderTest.evaluate(Rule.of(List.of(Value.of("setting.to.evaluate"), new Load())), cs);
+			// Check
+			assertEquals(expected, returned);
 		}
 
 		@Nested
