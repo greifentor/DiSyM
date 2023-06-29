@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import javax.inject.Named;
+
 import de.ollie.disym.service.RuleEvaluator;
 import de.ollie.disym.service.model.ConfigurationSetting;
 import de.ollie.disym.service.model.rule.Rule;
 
+@Named
 public class RuleEvaluatorImpl implements RuleEvaluator {
 
 	static final String MESSAGE_CONTAINS_CONTAINED_ARGUMENT_MISSED = "missing argument to check for being contained";
@@ -22,7 +25,9 @@ public class RuleEvaluatorImpl implements RuleEvaluator {
 		Stack<Object> stack = new Stack<>();
 		Map<String, Object> valueStore = new HashMap<>();
 		valueStore.put("setting.to.evaluate", settingToEvaluate);
-		rule.getWords().forEach(word -> word.evaluate(stack, valueStore));
+		rule.getWords().forEach(word -> {
+			word.evaluate(stack, valueStore);
+		});
 		return stack;
 	}
 

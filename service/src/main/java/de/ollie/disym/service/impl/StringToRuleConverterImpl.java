@@ -4,10 +4,13 @@ import static de.ollie.disym.util.Check.ensure;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.apache.commons.text.StringTokenizer;
+import org.apache.commons.text.matcher.StringMatcher;
+import org.apache.commons.text.matcher.StringMatcherFactory;
 
 import de.ollie.disym.service.StringToRuleConverter;
 import de.ollie.disym.service.WordFactory;
@@ -26,7 +29,9 @@ public class StringToRuleConverterImpl implements StringToRuleConverter {
 		ensure(ruleContent != null, "rule content to convert cannot be null!");
 		List<Word> words = new ArrayList<Word>();
 		StringTokenizer tokenizer = new StringTokenizer(ruleContent, " ");
-		while (tokenizer.hasMoreTokens()) {
+		StringMatcher sm = StringMatcherFactory.INSTANCE.quoteMatcher();
+		tokenizer.setQuoteMatcher(sm);
+		while (tokenizer.hasNext()) {
 			String token = tokenizer.nextToken();
 			if (wordFactory.isCommand(token)) {
 				words.add(wordFactory.createCommand(token));

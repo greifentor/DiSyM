@@ -31,7 +31,9 @@ public class YAMLReader implements ConfigurationSettingYAMLReaderPort {
 		} catch (FileNotFoundException fnfe) {
 			throw new ReaderException("file not found: " + fileName, fnfe);
 		} catch (IOException ioe) {
-			throw new ReaderException("something went wrong while reading: " + fileName, ioe);
+			throw new ReaderException(
+					"something went wrong while reading: " + fileName + " -> " + ioe.getMessage(),
+					ioe);
 		}
 	}
 

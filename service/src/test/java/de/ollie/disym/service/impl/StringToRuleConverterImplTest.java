@@ -42,6 +42,13 @@ class StringToRuleConverterImplTest {
 			assertEquals(expected, unitUnderTest.convert("true true AND"));
 		}
 
+		@Test
+		void returnsACorrectRule_passingAStringWithCorrectTokensAndDifferentStrings() {
+			Rule expected =
+					Rule.of(List.of(Value.of("aString"), Value.of("a string"), Value.of("another string"), new And()));
+			assertEquals(expected, unitUnderTest.convert("aString \"a string\" 'another string' AND"));
+		}
+
 	}
 
 	@Nested
@@ -56,18 +63,6 @@ class StringToRuleConverterImplTest {
 		@Test
 		void returnsCorrectString_passingAStringWithStringValue() {
 			String s = ";op";
-			assertEquals(s, unitUnderTest.getValue(s));
-		}
-
-		@Test
-		void returnsCorrectString_passingAStringWithStringValueInSingleQuotes() {
-			String s = "'true false bla bla'";
-			assertEquals(s, unitUnderTest.getValue(s));
-		}
-
-		@Test
-		void returnsCorrectString_passingAStringWithStringValueInDoubleQuotes() {
-			String s = "\"true false bla bla\"";
 			assertEquals(s, unitUnderTest.getValue(s));
 		}
 

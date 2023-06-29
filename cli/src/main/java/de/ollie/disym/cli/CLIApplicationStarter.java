@@ -21,10 +21,7 @@ public class CLIApplicationStarter implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		System.out.println("run");
-		for (String s : args.getSourceArgs()) {
-			System.out.println("- " + s);
-		}
+		cliRunner.run(args);
 	}
 
 }
