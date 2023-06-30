@@ -8,8 +8,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import lombok.Generated;
+
 @SpringBootApplication
 @ComponentScan("de.ollie.disym")
+@Generated
 public class CLIApplicationStarter implements ApplicationRunner {
 
 	public static void main(String[] args) {

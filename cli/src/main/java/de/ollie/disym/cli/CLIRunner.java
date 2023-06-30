@@ -13,6 +13,7 @@ import org.springframework.boot.ApplicationArguments;
 import de.ollie.disym.cli.model.Argument;
 import de.ollie.disym.cli.model.CommandLineOption;
 import de.ollie.disym.cli.model.CommandLineOption.Type;
+import de.ollie.disym.cli.model.EvaluationResult;
 import de.ollie.disym.reader.yaml.YAMLReader;
 import de.ollie.disym.service.RuleEvaluator;
 import de.ollie.disym.service.StringToRuleConverter;
@@ -26,6 +27,8 @@ public class CLIRunner {
 	@Inject
 	private CommandLineOptionChecker commandLineOptionChecker;
 	@Inject
+	private EvaluationResultProcessor evaluationResultProcessor;
+	@Inject
 	private RuleEvaluator ruleEvaluator;
 	@Inject
 	private StringToRuleConverter stringToRuleConverter;
@@ -33,27 +36,15 @@ public class CLIRunner {
 	private YAMLReader yamlReader;
 
 	public void run(ApplicationArguments args) {
-		List<Argument> arguments =
-				commandLineOptionChecker
-						.check(
-								args,
-								CommandLineOption
-										.of("rule", "A rule to check configuration settings for.", false, Type.STRING),
-								CommandLineOption
-										.of(
-												"yamlFile",
-												"Name of a YAML file with application properties.",
-												false,
-												Type.STRING));
+		List<Argument> arguments = commandLineOptionChecker.check(args,
+				CommandLineOption.of("rule", "A rule to check configuration settings for.", false, Type.STRING),
+				CommandLineOption
+						.of("yamlFile", "Name of a YAML file with application properties.", false, Type.STRING));
 		List<Rule> rules = new ArrayList<>();
 		for (Argument argument : arguments) {
 			if (argument.getName().equals("rule")) {
-				try {
-					for (Object o : argument.getValues()) {
-						rules.add(stringToRuleConverter.convert(o.toString()));
-					}
-				} catch (Exception e) {
-					LOG.warn("problems while converting rules: " + argument.getName() + " -> " + e.getMessage());
+				for (Object o : argument.getValues()) {
+					rules.add(stringToRuleConverter.convert(o.toString()));
 				}
 			}
 		}
@@ -61,21 +52,16 @@ public class CLIRunner {
 			for (Object value : argument.getValues()) {
 				try {
 					if (argument.getName().equals("yamlFile")) {
-						yamlReader
-								.readYAMLFile((String) value)
-								.forEach(
-										cs -> rules
-												.forEach(
-														rule -> System.out
-																.println(
-																		cs.getIdentifier() + " -> "
-																				+ ruleEvaluator.evaluate(rule, cs))));
+						yamlReader.readYAMLFile((String) value)
+								.forEach(cs -> rules.forEach(rule -> evaluationResultProcessor.add(EvaluationResult
+										.of(cs.getIdentifier(), (Boolean) ruleEvaluator.evaluate(rule, cs).pop()))));
 					}
 				} catch (Exception e) {
 					LOG.warn("problems while processing: " + argument.getName() + " -> " + e.getMessage());
 				}
 			}
 		}
+		evaluationResultProcessor.process();
 	}
 
 }
