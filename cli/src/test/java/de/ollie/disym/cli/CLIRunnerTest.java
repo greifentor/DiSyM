@@ -25,6 +25,8 @@ class CLIRunnerTest {
 
 	@MockBean
 	private EvaluationResultProcessor evaluationResultProcessor;
+	@MockBean
+	private HelpPrinter helpPrinter;
 
 	@Autowired
 	private CLIRunner unitUnderTest;
@@ -39,10 +41,34 @@ class CLIRunnerTest {
 			when(arguments.getOptionValues("rule")).thenReturn(List.of("setting.to.evaluate LOAD GET_CS_ID url CONTAINS"));
 			when(arguments.containsOption("yamlFile")).thenReturn(true);
 			when(arguments.getOptionValues("yamlFile")).thenReturn(List.of("src/test/resources/example-yaml-file.yml"));
-			// Run & Check
-			assertDoesNotThrow(() -> unitUnderTest.run(arguments));
+			// Run
+			unitUnderTest.run(arguments);
+			// Check
 			verify(evaluationResultProcessor, times(1)).add(EvaluationResult.of("related.systems.doof-url", true));
-			verify(evaluationResultProcessor, times(2)).process();
+		}
+
+		@Test
+		void callsTheEvaluationResultProcessorsProcessMethod_passingTheHELPCommand() { 
+			// Prepare
+			when(arguments.getNonOptionArgs()).thenReturn(List.of("help"));
+			// Run
+			unitUnderTest.run(arguments);
+			// Check
+			verify(helpPrinter, times(1)).print(System.out, CLIRunner.OPTIONS);
+		}
+
+		@Test
+		void callsTheEvaluationResultProcessorsProcessMethod_passingTheShowCommand() { 
+			// Prepare
+			when(arguments.getNonOptionArgs()).thenReturn(List.of("show"));
+			when(arguments.containsOption("rule")).thenReturn(true);
+			when(arguments.getOptionValues("rule")).thenReturn(List.of("setting.to.evaluate LOAD GET_CS_ID url CONTAINS"));
+			when(arguments.containsOption("yamlFile")).thenReturn(true);
+			when(arguments.getOptionValues("yamlFile")).thenReturn(List.of("src/test/resources/example-yaml-file.yml"));
+			// Run
+			unitUnderTest.run(arguments);
+			// Check
+			verify(evaluationResultProcessor, times(1)).process();
 		}
 
 		@Test
