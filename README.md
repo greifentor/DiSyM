@@ -12,12 +12,26 @@ A tool for distributed system mapping.
 * There should be a tool, which is able to show the system relations in a graphical way (maybe by an output as PlantUML file).
 * It should be possible to define rules for processing the sources (like "a property ending with 'url' is a possible candidate to be evaluated").
 * The application should store dependencies and links and usages of other services.
-* As the configuration should be done via a script file.
+* As the configuration should be done via a script file or something like that.
 
+## How to Build?
+
+### Requirements
+
+* Java 11+
+* Maven 3.5.x+
+
+### Build
+
+Call ``mvn clean install`` on CLI. To supress unit test exeecution add option ``-Dmaven.test.skip`` (put this in quotes ("") if you are using PowerShell).
 
 ## How to Call?
 
-...
+Once build successfully the application can be started by:
+
+``.\start.bat`` (Windows) or
+
+``./start.sh`` (Linux) (may need to make the file executable before via ``chmod`` command)
 
 
 ## Rules

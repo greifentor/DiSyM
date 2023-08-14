@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.ApplicationArguments;
 
+import de.ollie.disym.cli.exception.UnknownCommandException;
 import de.ollie.disym.cli.model.CommandLineCommand;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,7 +34,7 @@ class CommandLineCommandCheckerTest {
 		@Test
 		void throwsAnException_passingAnUnknownCommand() {
 			when(arguments.getNonOptionArgs()).thenReturn(List.of(";op"));
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.check(arguments));
+			assertThrows(UnknownCommandException.class, () -> unitUnderTest.check(arguments));
 		}
 
 		@ParameterizedTest

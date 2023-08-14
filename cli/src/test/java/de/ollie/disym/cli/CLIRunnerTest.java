@@ -1,6 +1,7 @@
 package de.ollie.disym.cli;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,10 +36,13 @@ class CLIRunnerTest {
 	class TestsOfMethod_run_ApplicationArguments {
 
 		@Test
-		void happyRun() { 
+		void happyRun() {
 			// Prepare
+			reset(evaluationResultProcessor);
+			when(arguments.getNonOptionArgs()).thenReturn(List.of("show"));
 			when(arguments.containsOption("rule")).thenReturn(true);
-			when(arguments.getOptionValues("rule")).thenReturn(List.of("setting.to.evaluate LOAD GET_CS_ID url CONTAINS"));
+			when(arguments.getOptionValues("rule"))
+					.thenReturn(List.of("setting.to.evaluate LOAD GET_CS_ID url CONTAINS"));
 			when(arguments.containsOption("yamlFile")).thenReturn(true);
 			when(arguments.getOptionValues("yamlFile")).thenReturn(List.of("src/test/resources/example-yaml-file.yml"));
 			// Run
@@ -48,8 +52,9 @@ class CLIRunnerTest {
 		}
 
 		@Test
-		void callsTheEvaluationResultProcessorsProcessMethod_passingTheHELPCommand() { 
+		void callsTheEvaluationResultProcessorsProcessMethod_passingTheHELPCommand() {
 			// Prepare
+			reset(helpPrinter);
 			when(arguments.getNonOptionArgs()).thenReturn(List.of("help"));
 			// Run
 			unitUnderTest.run(arguments);
@@ -58,11 +63,13 @@ class CLIRunnerTest {
 		}
 
 		@Test
-		void callsTheEvaluationResultProcessorsProcessMethod_passingTheShowCommand() { 
+		void callsTheEvaluationResultProcessorsProcessMethod_passingTheShowCommand() {
 			// Prepare
+			reset(evaluationResultProcessor);
 			when(arguments.getNonOptionArgs()).thenReturn(List.of("show"));
 			when(arguments.containsOption("rule")).thenReturn(true);
-			when(arguments.getOptionValues("rule")).thenReturn(List.of("setting.to.evaluate LOAD GET_CS_ID url CONTAINS"));
+			when(arguments.getOptionValues("rule"))
+					.thenReturn(List.of("setting.to.evaluate LOAD GET_CS_ID url CONTAINS"));
 			when(arguments.containsOption("yamlFile")).thenReturn(true);
 			when(arguments.getOptionValues("yamlFile")).thenReturn(List.of("src/test/resources/example-yaml-file.yml"));
 			// Run
@@ -74,6 +81,7 @@ class CLIRunnerTest {
 		@Test
 		void doesNotThrowAnException_passingAnInvalidRule() {
 			// Prepare
+			when(arguments.getNonOptionArgs()).thenReturn(List.of("show"));
 			when(arguments.containsOption("rule")).thenReturn(true);
 			when(arguments.getOptionValues("rule")).thenReturn(List.of("setting.to.evaluate LOAD GET_CS_ID url CONTAINS"));
 			when(arguments.containsOption("yamlFile")).thenReturn(true);

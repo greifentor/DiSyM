@@ -1,5 +1,6 @@
 package de.ollie.disym.cli;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.ApplicationArguments;
 
+import de.ollie.disym.cli.exception.UnknownCommandException;
 import de.ollie.disym.cli.model.Argument;
 import de.ollie.disym.cli.model.CommandLineCommand;
 import de.ollie.disym.cli.model.CommandLineOption;
@@ -45,9 +47,10 @@ public class CLIRunner {
 			CommandLineOption.of("yamlFile", "Name of a YAML file with application properties.", false, Type.STRING) };
 
 	public void run(ApplicationArguments args) {
-		List<CommandLineCommand> commands = commandLineCommandChecker.check(args);
+		PrintStream out = System.out;
+		List<CommandLineCommand> commands = getCommandLineCommands(args, out);
 		if (commands.contains(CommandLineCommand.HELP) || commands.isEmpty()) {
-			helpPrinter.print(System.out, OPTIONS);
+			helpPrinter.print(out, OPTIONS);
 		} else {
 			List<Argument> arguments = commandLineOptionChecker.check(args, OPTIONS);
 			List<Rule> rules = new ArrayList<>();
@@ -75,6 +78,15 @@ public class CLIRunner {
 			if (commands.contains(CommandLineCommand.SHOW)) {
 				evaluationResultProcessor.process();
 			}
+		}
+	}
+
+	private List<CommandLineCommand> getCommandLineCommands(ApplicationArguments args, PrintStream out) {
+		try {
+			return commandLineCommandChecker.check(args);
+		} catch (UnknownCommandException uce) {
+			out.println("\n'" + uce.getCommand() + "' is not a valid command!\n");
+			return List.of();
 		}
 	}
 

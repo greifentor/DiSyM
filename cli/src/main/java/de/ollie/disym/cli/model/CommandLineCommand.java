@@ -1,5 +1,7 @@
 package de.ollie.disym.cli.model;
 
+import de.ollie.disym.cli.exception.UnknownCommandException;
+
 public enum CommandLineCommand {
 
 	HELP("help", "show all commands and options."),
@@ -19,7 +21,7 @@ public enum CommandLineCommand {
 				return command;
 			}
 		}
-		throw new IllegalArgumentException("illegal token for command: " + token);
+		throw new UnknownCommandException("illegal token for command: " + token, token);
 	}
 
 	public String getDescription() {
