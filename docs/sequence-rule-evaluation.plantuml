@@ -1,0 +1,37 @@
+@startuml "Sequence Rule Evaluation"
+
+participant Caller as "Calling Method"
+
+Caller --> Caller : create configurationSetting
+Caller -> StringToRuleConverter : convert(stringWithRule)
+StringToRuleConverter --> StringToRuleConverter : create words as List<Word>
+StringToRuleConverter --> StringToRuleConverter : tokenize
+loop for each token
+    StringToRuleConverter -> WordFactory : isCommand(token)
+    WordFactory --> StringToRuleConverter : boolean
+    alt true
+        StringToRuleConverter -> WordFactory : createCommand(token)
+        WordFactory --> StringToRuleConverter : command
+        StringToRuleConverter --> StringToRuleConverter : add command to words
+    else false
+        StringToRuleConverter --> StringToRuleConverter : getValue(token)
+        StringToRuleConverter --> StringToRuleConverter : create word from value
+        StringToRuleConverter --> StringToRuleConverter : add value to words
+    end
+end
+StringToRuleConverter --> StringToRuleConverter : create rule from words
+StringToRuleConverter --> Caller : rule
+
+Caller ->  RuleEvaluator : evaluate(rule, configurationSetting)
+
+RuleEvaluator -> Rule : getWords()
+RuleEvaluator --> RuleEvaluator : create stack
+RuleEvaluator --> RuleEvaluator : create valueStore
+Rule --> RuleEvaluator : words
+loop for each of words
+    RuleEvaluator -> Word : evaluate(stack, valueStore)
+    Word --> RuleEvaluator : stack
+end
+RuleEvaluator --> Caller : stack
+
+@enduml

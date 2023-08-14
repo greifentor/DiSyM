@@ -27,6 +27,7 @@ public class HelpPrinter {
 				.stream()
 				.map(option -> String.format("    %-10s - %s", option.getName(), option.getDescription()))
 				.forEach(printStream::println);
+		printStream.println("\n");
 	}
 
 }

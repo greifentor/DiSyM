@@ -1,0 +1,70 @@
+@startuml "Class Diagram UPN Runner"
+
+component Service {
+
+    package de.ollie.disym.service {
+
+        package model.rule {
+
+            interface Word {
+                Stack<Object> evaluate(Stack<Object>, Map<String, Object>)
+            }
+
+            class Rule {
+                List<Word> words
+            }
+
+            class Value implements Word {
+                Object value
+            }
+
+            abstract class Command implements Word {
+                String token
+            }
+
+        }
+
+        interface CommandFactory<T extends Command> {
+            T create()
+        }
+
+        interface RuleEvaluator {
+            Stack<Object> evaluate(Rule, ConfigurationSetting)
+        }
+
+        interface StringToRuleConverter {
+        	Rule convert(String ruleContent)
+        }
+
+        interface WordFactory {
+            Command createCommand(String token)
+            Value createValue(Object value)
+            boolean isCommand(String token)
+        }
+
+        package impl {
+
+            class RuleEvaluatorImpl implements RuleEvaluator
+
+            class StringToRuleConverterImpl implements StringToRuleConverter
+                StringToRuleConverterImpl --> WordFactory : wordFactory
+
+            class WordFactoryImpl implements WordFactory
+                WordFactoryImpl "1"-->"n" CommandFactory : commandFactories
+
+        }
+
+        package model {
+
+            class ConfigurationSetting {
+                String identifier
+	            String value
+            }
+
+        }
+
+    }
+
+}
+
+@enduml

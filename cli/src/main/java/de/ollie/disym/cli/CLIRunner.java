@@ -46,7 +46,7 @@ public class CLIRunner {
 
 	public void run(ApplicationArguments args) {
 		List<CommandLineCommand> commands = commandLineCommandChecker.check(args);
-		if (commands.contains(CommandLineCommand.HELP)) {
+		if (commands.contains(CommandLineCommand.HELP) || commands.isEmpty()) {
 			helpPrinter.print(System.out, OPTIONS);
 		} else {
 			List<Argument> arguments = commandLineOptionChecker.check(args, OPTIONS);
