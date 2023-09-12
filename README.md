@@ -41,8 +41,8 @@ Possible parameters:
 |------|-------------------|-------|
 |help|``help``|Prints a help page to the console|
 |rule|``rule="setting.to.evaluate LOAD GET_CS_ID url CONTAINS"``|Defines a rule to find matching YAML file entries|
-|yamlFile|``yamlFile=/home/blubs/prjct/application.yaml``|The name of the YAML file to check|
 |show|``show``|Prints the evaluation result to the console|
+|yamlFile|``yamlFile=/home/blubs/prjct/application.yaml``|The name of the YAML file to check|
 
 
 ## Developer Hints
