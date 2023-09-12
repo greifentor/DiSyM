@@ -14,6 +14,7 @@ A tool for distributed system mapping.
 * The application should store dependencies and links and usages of other services.
 * As the configuration should be done via a script file or something like that.
 
+
 ## How to Build?
 
 ### Requirements
@@ -25,6 +26,7 @@ A tool for distributed system mapping.
 
 Call ``mvn clean install`` on CLI. To supress unit test exeecution add option ``-Dmaven.test.skip`` (put this in quotes ("") if you are using PowerShell).
 
+
 ## How to Call?
 
 Once build successfully the application can be started by:
@@ -32,6 +34,11 @@ Once build successfully the application can be started by:
 ``.\start.bat`` (Windows) or
 
 ``./start.sh`` (Linux) (may need to make the file executable before via ``chmod`` command)
+
+
+## Developer Hints
+
+* The back end is generated with the Archimedes tooling which could be also downloaded on github/greifentor.
 
 
 ## Rules

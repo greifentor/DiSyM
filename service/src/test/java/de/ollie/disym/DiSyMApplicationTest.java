@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class ApplicationStarterTest {
+public class DiSyMApplicationTest {
 
 	@Test
 	void applicationStarts() {
 		try {
-			ApplicationStarter.main(new String[0]);
+			DiSyMApplication.main(new String[0]);
 		} catch (Exception e) {
 			fail("there should not be an application!");
 		}
