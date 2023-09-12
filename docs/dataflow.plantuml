@@ -1,0 +1,30 @@
+@startuml
+
+skinparam linetype ortho
+
+actor User
+
+database DB
+
+file ConfigurationFile
+
+archimate #Technology Console <<technology-device>>
+
+component DiSyM {
+
+    component CLI
+
+    component Service
+
+}
+
+User --> CLI : Call via parameters
+User --> ConfigurationFile : Call via configuration file
+ConfigurationFile --> CLI
+
+CLI --> Service
+
+Service --> DB : With "applicationName" & evaluation data
+Service --> Console : With "show" option
+
+@enduml

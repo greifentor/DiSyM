@@ -40,10 +40,27 @@ Possible parameters:
 
 |Parameter Name|Example|Description|
 |------|-------------------|-------|
+|confFile|``confFile=a-valid-yaml-file-name.yaml``|Reads the complete configuration for the call from a YAML file (see below)|
 |help|``help``|Prints a help page to the console|
 |rule|``rule="setting.to.evaluate LOAD GET_CS_ID url CONTAINS"``|Defines a rule to find matching YAML file entries|
 |show|``show``|Prints the evaluation result to the console|
 |yamlFile|``yamlFile=/home/blubs/prjct/application.yaml``|The name of the YAML file to check|
+
+
+## Configuration Files
+
+As an alternative for passing parameters via the command line it is possible to create a configuration file and pass 
+this to the application.
+
+The file should be in YAML format and should have the information shown below:
+
+```
+disym:
+  rules:
+    - rule1 (string)
+    - ruleN (string)
+  yamlFile: name-of-the-yaml.file (string)
+```
 
 
 ## Developer Hints
