@@ -24,7 +24,8 @@ A tool for distributed system mapping.
 
 ### Build
 
-Call ``mvn clean install`` on CLI. To supress unit test exeecution add option ``-Dmaven.test.skip`` (put this in quotes ("") if you are using PowerShell).
+Call ``mvn clean install`` on CLI. To suppress unit test execution add option ``-Dmaven.test.skip`` (put this in quotes 
+("") if you are using PowerShell).
 
 
 ## How to Call?
@@ -52,19 +53,20 @@ Possible parameters:
 
 ## Rules
 
-To evaluate, if a configuration setting is a potential url setting, rules could be used. A rule is an UPN expression which should
-return a "true" value if the configuration setting is identified as a potential url.
+To evaluate, if a configuration setting is a potential url setting, rules could be used. A rule is an UPN expression 
+which should return a "true" value if the configuration setting is identified as a potential url.
 
 ### How Does It Work?
 
-The application could be configured with a set of rules while starting it (see "How to Call?" chapter above). These rules will be
-executed for each configuration setting found in the specific sources of settings. If one or more rule is true for a configuration
-setting it is handled as a potential url setting.
+The application could be configured with a set of rules while starting it (see "How to Call?" chapter above). These 
+rules will be executed for each configuration setting found in the specific sources of settings. If one or more rule is 
+true for a configuration setting it is handled as a potential url setting.
 
-The rules are defined in a UPN syntax which is working with a data stack and a value store. The data stack is used to store parameters
-for command calls temporarily and to provide the results of command calls.
+The rules are defined in a UPN syntax which is working with a data stack and a value store. The data stack is used to 
+store parameters for command calls temporarily and to provide the results of command calls.
 
-For instance the rule ``'an.url.setting' url CONTAINS`` checks if the string "url" is contained in the string "an.url.setting" and would push the result of that check onto the stack (in this static case: Boolean.TRUE).
+For instance the rule ``'an.url.setting' url CONTAINS`` checks if the string "url" is contained in the string 
+"an.url.setting" and would push the result of that check onto the stack (in this static case: Boolean.TRUE).
 
 The stack as well as the value store are able to store object values. The value store does this under an identifier name.
 
@@ -134,8 +136,8 @@ Runs an or operation for the two topmost elements of the stack. Both must be of 
 
 #### STORE
 
-The commands moves the second topmost element of the stack to the value store using the topmost value as identifier. Both information
-will be removed from the stack.
+The commands moves the second topmost element of the stack to the value store using the topmost value as identifier.
+Both information will be removed from the stack.
 
 |||
 |------|-------------------|
@@ -145,7 +147,9 @@ will be removed from the stack.
 
 ### Values
 
-Any token in a rule which is not identified as a command will be stored as a value. While converting the string with teh rule the application tries to find the correct type for the value. Any value which cannot be identified as an explicit type will be stored as a string.
+Any token in a rule which is not identified as a command will be stored as a value. While converting the string with the 
+rule the application tries to find the correct type for the value. Any value which cannot be identified as an explicit 
+type will be stored as a string.
 
 |Type|Values to Pass|
 |-|-|
