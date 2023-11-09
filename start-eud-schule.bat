@@ -1,0 +1,1 @@
+java -jar .\cli\target\disym-cli-0.0.1.jar show "--rule=setting.to.evaluate LOAD GET_CS_ID 'URL' CONTAINS" "--yamlFile=/workspace/eud-schule/docker/docker-compose-ollie-local.yaml"

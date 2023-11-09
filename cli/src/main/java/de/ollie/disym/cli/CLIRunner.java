@@ -47,6 +47,8 @@ public class CLIRunner {
 			CommandLineOption.of("yamlFile", "Name of a YAML file with application properties.", false, Type.STRING) };
 
 	public void run(ApplicationArguments args) {
+//		args.getNonOptionArgs().forEach(System.out::println);
+//		args.getOptionNames().forEach(n -> System.out.println(n + " -> " + args.getOptionValues(n)));
 		PrintStream out = System.out;
 		List<CommandLineCommand> commands = getCommandLineCommands(args, out);
 		if (commands.contains(CommandLineCommand.HELP) || commands.isEmpty()) {
@@ -76,7 +78,15 @@ public class CLIRunner {
 				}
 			}
 			if (commands.contains(CommandLineCommand.SHOW)) {
-				evaluationResultProcessor.process();
+				out.println("\n");
+				evaluationResultProcessor.process(out::println);
+				out.println("\n");
+			}
+			if (commands.contains(CommandLineCommand.STORE)) {
+				evaluationResultProcessor.process(evaluationResult -> {
+					out.println(evaluationResult);
+
+				});
 			}
 		}
 	}

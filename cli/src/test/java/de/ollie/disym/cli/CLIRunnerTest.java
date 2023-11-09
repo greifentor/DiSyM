@@ -1,12 +1,14 @@
 package de.ollie.disym.cli;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -75,7 +77,10 @@ class CLIRunnerTest {
 			// Run
 			unitUnderTest.run(arguments);
 			// Check
-			verify(evaluationResultProcessor, times(1)).process();
+			verify(evaluationResultProcessor, times(1)).process(any(Consumer.class));
+		}
+
+		void nop() {
 		}
 
 		@Test

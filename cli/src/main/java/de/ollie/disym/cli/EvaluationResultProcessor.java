@@ -2,6 +2,7 @@ package de.ollie.disym.cli;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.inject.Named;
 
@@ -16,10 +17,8 @@ public class EvaluationResultProcessor {
 		evaluationResults.add(evaluationResult);
 	}
 
-	public void process() {
-		System.out.println("\n");
-		evaluationResults.stream().filter(EvaluationResult::isResult).forEach(System.out::println);
-		System.out.println("\n");
+	public void process(Consumer<EvaluationResult> evaluationResultProvider) {
+		evaluationResults.stream().filter(EvaluationResult::isResult).forEach(evaluationResultProvider::accept);
 	}
 
 }

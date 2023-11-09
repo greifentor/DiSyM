@@ -5,7 +5,8 @@ import de.ollie.disym.cli.exception.UnknownCommandException;
 public enum CommandLineCommand {
 
 	HELP("help", "show all commands and options."),
-	SHOW("show", "prints the result of the application to the console.");
+	SHOW("show", "prints the result of the application to the console."),
+	STORE("store", "loads the results into the configured DiSyM database.");
 
 	private String token;
 	private String description;

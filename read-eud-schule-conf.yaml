@@ -1,0 +1,4 @@
+disym:
+  rules:
+    - GET_CS_ID DUP PRINT 'URL' contains DUP PRINT
+  yamlFile: /workspace/eud-schule/docker/docker-compose-ollie-local.yaml

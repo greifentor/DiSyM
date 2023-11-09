@@ -47,7 +47,7 @@ Possible parameters:
 |yamlFile|``yamlFile=/home/blubs/prjct/application.yaml``|The name of the YAML file to check|
 
 
-## Configuration Files
+## Configuration Files (NOT IMPLEMENTED YET!!!)
 
 As an alternative for passing parameters via the command line it is possible to create a configuration file and pass 
 this to the application.
@@ -65,7 +65,7 @@ disym:
 
 ## Developer Hints
 
-* The back end is generated with the Archimedes tooling which could be also downloaded on github/greifentor.
+* The backend is generated with the Archimedes tooling which could be also downloaded on github/greifentor.
 
 
 ## Rules
@@ -87,6 +87,10 @@ For instance the rule ``'an.url.setting' url CONTAINS`` checks if the string "ur
 
 The stack as well as the value store are able to store object values. The value store does this under an identifier name.
 
+The current configuration setting is stored in the value store with key "setting.to.evaluate" in the beginning of the
+rule evaluation. It can be put on the top of the stack by ``'setting.to.evaluate' LOAD``.
+
+
 ### Commands
 
 #### AND
@@ -105,31 +109,41 @@ Checks, if the topmost element of the stack is contained by that one which is st
 
 |||
 |------|-------------------|
-|Syntax|``string_to_check_for_contains string_to_check_for_being_contained CONTAINS`` 
-|Example|``'an.url.setting' url CONTAINS``
-|Stack after operation|``Boolean.TRUE``
+|Syntax|``string_to_check_for_contains`` string_to_check_for_being_contained CONTAINS``|
+|Example|``'an.url.setting' url CONTAINS``|
+|Stack after operation|``Boolean.TRUE``|
+
+#### DUP
+
+Duplicates the top of the stack by reference.
+
+|||
+|------|-------------------|
+|Syntax|``DUP``|
+|Example|``true DUP``|
+|Stack after operation|``Boolean.TRUE Boolean.TRUE``|
 
 #### GET_CS_ID
 
-Separated the identifier from a configuration setting object which must be the topmost of the stack.
+Separates the identifier from a configuration setting object which must be the topmost of the stack.
 
 |||
 |------|-------------------|
-|Syntax|``GET_CS_ID`
-|Example|``"setting.to.evaluate" LOAD GET_CS_ID``
-|Stack after operation|``configuration_setting_identifier``
-|Note|The configuration setting to check for is stored in the value store with the identifier "setting.to.evaluate".
+|Syntax|``GET_CS_ID`|
+|Example|``"setting.to.evaluate" LOAD GET_CS_ID``|
+|Stack after operation|``configuration_setting_identifier``|
+|Note|The configuration setting to check for is stored in the value store with the identifier "setting.to.evaluate".|
 
 #### GET_CS_VALUE
 
-Separated the value from a configuration setting object which must be the topmost of the stack.
+Separates the value from a configuration setting object which must be the topmost of the stack.
 
 |||
 |------|-------------------|
-|Syntax|``GET_CS_VALUE`
-|Example|``"setting.to.evaluate" LOAD GET_CS_VALUE``
-|Stack after operation|``configuration_setting_value``
-|Note|The configuration setting to check for is stored in the value store with the identifier "setting.to.evaluate".
+|Syntax|``GET_CS_VALUE``|
+|Example|``"setting.to.evaluate" LOAD GET_CS_VALUE``|
+|Stack after operation|``configuration_setting_value``|
+|Note|The configuration setting to check for is stored in the value store with the identifier "setting.to.evaluate".|
 
 #### LOAD
 
@@ -150,6 +164,16 @@ Runs an or operation for the two topmost elements of the stack. Both must be of 
 |Syntax|``BooleanValue BooleanValue OR``|
 |Example|``true true OR``|
 |Stack after operation|``Boolean.TRUE``|
+
+#### PRINT
+
+Prints the top of the stack to the console output. This command should be used for debugging purpose only!
+
+|||
+|------|-------------------|
+|Syntax|``PRINT``|
+|Example|``'a small test' PRINT``|
+|Stack after operation|````|
 
 #### STORE
 

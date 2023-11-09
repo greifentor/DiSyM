@@ -26,7 +26,10 @@ class EvaluationResultProcessorTest {
 		when(evaluationResult.isResult()).thenReturn(true);
 		unitUnderTest.add(evaluationResult);
 		// Run & Check
-		assertDoesNotThrow(() -> unitUnderTest.process());
+		assertDoesNotThrow(() -> unitUnderTest.process(e -> nop()));
+	}
+
+	void nop() {
 	}
 
 }
